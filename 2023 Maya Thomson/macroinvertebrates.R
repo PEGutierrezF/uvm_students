@@ -14,7 +14,7 @@ richness <- data %>%
   group_by(Stream, Pack) %>%
   summarize(Family_richness = n_distinct(Family))
 
-head(richness, 20)
+head(richness)
 
 # Summarize by stream
 summary_richness <- richness %>%
