@@ -5,7 +5,7 @@ library(readxl)
 library(dplyr)
 library(ggplot2)
 
-data <- read_excel('Sum of Thesis Stream Data.xlsx', sheet = 'Macros')
+data <- read_excel('2023 Maya Thomson/Sum of Thesis Stream Data.xlsx', sheet = 'Macros')
 head(data,6)
 
 
