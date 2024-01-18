@@ -30,12 +30,13 @@ summary_richness$Group <- ifelse(summary_richness$Stream %in%
 # Create barplot
 p <- ggplot(summary_richness, aes(x = Group, y = Mean_Fam_richness, fill = Stream)) +
   geom_bar(stat = "identity", position = "dodge", color = "black") +
-  geom_errorbar(aes(ymin = Mean_Fam_richness - SD_Fam_richness, ymax = Mean_Fam_richness + SD_Fam_richness),
+  geom_errorbar(aes(ymin = Mean_Fam_richness, ymax = Mean_Fam_richness + SD_Fam_richness),
                 position = position_dodge(0.9), width = 0.2) +
   labs(title = "Mean Abundance and SD Barplot",
        x = "Stream",
        y = "Mean Richness") +
-  theme_minimal()
+  theme_classic() +
+  theme(legend.position = "none")
 p
 
 
@@ -64,12 +65,12 @@ summary_abundance$Group <- ifelse(summary_abundance$Stream %in%
 # Create barplot for abundance
 q <- ggplot(summary_abundance, aes(x = Group, y = mean_abundance, fill = Stream)) +
   geom_bar(stat = "identity", position = "dodge", color = "black") +
-  geom_errorbar(aes(ymin = mean_abundance - sd_abundance, ymax = mean_abundance + sd_abundance),
+  geom_errorbar(aes(ymin = mean_abundance, ymax = mean_abundance + sd_abundance),
                 position = position_dodge(0.9), width = 0.2) +
   labs(title = "Mean Abundance and SD Barplot",
        x = "Stream",
        y = "Mean Abundance") +
-  theme_minimal()
+  theme_classic()
 
 q
 

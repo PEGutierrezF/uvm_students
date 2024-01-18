@@ -33,15 +33,18 @@ summary_richness$Group <- ifelse(summary_richness$Stream %in%
                                    c("Brown", "Stevenspeil"), "Forested", "Urban")
 
 # Create barplot
-p <- ggplot(summary_richness, aes(x = Group, y = Mean_Fam_richness, fill = Stream)) +
+p_c <- ggplot(summary_richness, aes(x = Group, y = Mean_Fam_richness, fill = Stream)) +
   geom_bar(stat = "identity", position = "dodge", color = "black") +
   geom_errorbar(aes(ymin = Mean_Fam_richness, ymax = Mean_Fam_richness + SD_Fam_richness),
                 position = position_dodge(0.9), width = 0.2) +
   labs(title = "Mean Ricness and SD Barplot",
        x = "Stream",
        y = "Mean Richness") +
-  theme_minimal()
-p
+  theme_classic() +
+  theme(legend.position = "none")
+  
+
+p_c
 
 
 
@@ -70,13 +73,17 @@ summary_abundance$Group <- ifelse(summary_abundance$Stream %in%
                                     c("Brown", "Stevenspeil"), "Forested", "Urban")
 
 # Create barplot for abundance
-q <- ggplot(summary_abundance, aes(x = Group, y = mean_abundance, fill = Stream)) +
+q_c <- ggplot(summary_abundance, aes(x = Group, y = mean_abundance, fill = Stream)) +
   geom_bar(stat = "identity", position = "dodge", color = "black") +
   geom_errorbar(aes(ymin = mean_abundance, ymax = mean_abundance + sd_abundance),
                 position = position_dodge(0.9), width = 0.2) +
   labs(title = "Mean Abundance and SD Barplot",
        x = "Stream",
        y = "Mean Abundance") +
-  theme_minimal()
+  theme_classic()
 
-q
+q_c
+
+
+library(patchwork)
+p_c + q_c
