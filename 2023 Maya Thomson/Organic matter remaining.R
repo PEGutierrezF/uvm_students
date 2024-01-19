@@ -20,8 +20,8 @@ data$Subtraction_result <- ifelse(data$Weight_final > data$Weight_initial,
 # Summarize by stream
 data_remaining <- data %>%
   group_by(Stream) %>%
-  summarise(Mean_remaining = mean(Subtraction_result),
-            SD_remaining = sd(Subtraction_result))
+  summarise(Mean_remaining = mean(Weight_final ),
+            SD_remaining = sd(Weight_final ))
 
 # Create a new column for grouping
 data_remaining$Group <- ifelse(data_remaining$Stream %in% 
