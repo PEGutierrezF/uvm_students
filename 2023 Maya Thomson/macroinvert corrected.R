@@ -1,5 +1,12 @@
 
 
+
+
+library(readxl)
+library(dplyr)
+library(ggplot2)
+
+
 data <- read_excel('2023 Maya Thomson/Sum of Thesis Stream Data.xlsx', sheet = 'Macros')
 head(data,6)
 
@@ -13,8 +20,7 @@ data$Subtraction_result <- ifelse(data$Weight_final > data$Weight_initial,
 # Assuming your_data is your dataset
 result <- data %>%
   group_by(Stream, Pack) %>%
-  summarize(
-    Mean = n_distinct(Family),
+  summarize(Mean = n_distinct(Family),
     Subtraction_Result = first(Subtraction_result),
     Mean_Divided = Mean / Subtraction_Result) %>%
   print()
