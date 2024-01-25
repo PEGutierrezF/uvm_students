@@ -13,11 +13,11 @@ head(data,6)
 
 result <- data %>%
   group_by(Stream, Pack) %>%
-  reframe(Mean = n_distinct(Family),
+  reframe(
+    Mean = n_distinct(Family),
     Subtraction_Result = first(Weight_final),
-    Mean_Divided = Mean / Weight_final) %>%
-  print()
-
+    Mean_Divided = Mean / Weight_final)
+result
 
 
 # Summarize by stream
