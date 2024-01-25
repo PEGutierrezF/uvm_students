@@ -7,22 +7,15 @@ library(dplyr)
 library(ggplot2)
 
 
-data <- read_excel('2023 Maya Thomson/Sum of Thesis Stream Data.xlsx', sheet = 'Macros')
+data <- read_excel('2023 Maya Thomson/Sum_Stream_Data.xlsx', sheet = 'Macros')
 head(data,6)
 
 
-# Create a new column with the subtraction (Weight_initial - Weight_final) and keep Weight_final when it's higher
-data$Subtraction_result <- ifelse(data$Weight_final > data$Weight_initial, 
-                                  data$Weight_final, data$Weight_initial - data$Weight_final)
-
-
-
-# Assuming your_data is your dataset
 result <- data %>%
   group_by(Stream, Pack) %>%
-  summarize(Mean = n_distinct(Family),
-    Subtraction_Result = first(Subtraction_result),
-    Mean_Divided = Mean / Subtraction_Result) %>%
+  reframe(Mean = n_distinct(Family),
+    Subtraction_Result = first(Weight_final),
+    Mean_Divided = Mean / Weight_final) %>%
   print()
 
 
@@ -43,7 +36,7 @@ p_c <- ggplot(summary_richness, aes(x = Group, y = Mean_Fam_richness, fill = Str
   geom_bar(stat = "identity", position = "dodge", color = "black") +
   geom_errorbar(aes(ymin = Mean_Fam_richness, ymax = Mean_Fam_richness + SD_Fam_richness),
                 position = position_dodge(0.9), width = 0.2) +
-  labs(title = "Mean Ricness and SD Barplot",
+  labs(title = "",
        x = "Stream",
        y = "Mean Richness") +
   theme_classic() +
