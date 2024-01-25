@@ -5,7 +5,7 @@
 library(readxl)
 library(dplyr)
 library(ggplot2)
-
+library(patchwork)
 
 data <- read_excel('2023 Maya Thomson/Sum_Stream_Data.xlsx', sheet = 'Macros')
 head(data,6)
@@ -52,11 +52,9 @@ p_c
 # Assuming your_data is your dataset
 result_abudance <- data %>%
   group_by(Stream, Pack) %>%
-  summarize(
-    Abundance = n(),
-    Subtraction_Result = first(Subtraction_result),
-    Abundance_Divided = Abundance / Subtraction_Result
-  ) %>%
+  reframe(Abundance = n(),
+    Subtraction_Result = first(Weight_final),
+    Abundance_Divided = Abundance / Weight_final) %>%
   print()
 
 
@@ -76,7 +74,7 @@ q_c <- ggplot(summary_abundance, aes(x = Group, y = mean_abundance, fill = Strea
   geom_bar(stat = "identity", position = "dodge", color = "black") +
   geom_errorbar(aes(ymin = mean_abundance, ymax = mean_abundance + sd_abundance),
                 position = position_dodge(0.9), width = 0.2) +
-  labs(title = "Mean Abundance and SD Barplot",
+  labs(title = "",
        x = "Stream",
        y = "Mean Abundance") +
   theme_classic()
@@ -84,5 +82,5 @@ q_c <- ggplot(summary_abundance, aes(x = Group, y = mean_abundance, fill = Strea
 q_c
 
 
-library(patchwork)
+
 p_c + q_c
