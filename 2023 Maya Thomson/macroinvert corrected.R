@@ -74,21 +74,21 @@ summary(result_anova)
 
 # Abundance ---------------------------------------------------------------
 
-
-# Assuming your_data is your dataset
-result_abudance <- data %>%
+# Count and sum characters in the Family column by Stream and Pack
+result_abundance <- data %>%
   group_by(Stream, Pack) %>%
-  reframe(Abundance = n(),
-    Subtraction_Result = first(Weight_final),
-    Abundance_Divided = Abundance / Weight_final) %>%
-  print()
+  summarize(abundance = n(),
+            FirstWeightFinal = first(Weight_final),
+            abunndance_corrected = abundance / FirstWeightFinal)
+
+result_abundance
 
 
 # Calculate mean and standard deviation for each stream
-summary_abundance <- result_abudance %>%
+summary_abundance <- result_abundance %>%
   group_by(Stream) %>%
-  summarize(mean_abundance = mean(Abundance_Divided),
-            sd_abundance = sd(Abundance_Divided))
+  summarize(mean_abundance = mean(abunndance_corrected),
+            sd_abundance = sd(abunndance_corrected))
 
 
 # Create a new column for grouping
@@ -110,3 +110,32 @@ q_c
 
 
 p_c + q_c
+
+
+
+
+
+
+#ANOVA
+
+anova_abundance <- result_abundance %>%
+  group_by(Stream, Pack) %>%
+  slice(1) %>%
+  ungroup() %>%
+  select(Stream, abunndance_corrected)
+
+shapiro.test(anova_abundance$abunndance_corrected)
+new_abunndance_corrected<-log(anova_abundance$abunndance_corrected)
+shapiro.test(new_abunndance_corrected)
+
+
+# Perform one-way ANOVA
+result_anova <- aov(new_abunndance_corrected ~ Stream, data = result)
+
+# Display the ANOVA table
+summary(result_anova)
+
+# Perform Tukey post-hoc test
+tukey_result <- TukeyHSD(result_anova)
+
+
