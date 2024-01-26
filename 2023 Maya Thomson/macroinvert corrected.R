@@ -50,6 +50,7 @@ p_c
 
 
 
+#ANOVA
 
 anova_richness <- result %>%
   group_by(Stream, Pack) %>%
@@ -58,9 +59,21 @@ anova_richness <- result %>%
   select(Stream, total_corrected)
 
 shapiro.test(anova_richness$total_corrected)
+new_total_corrected <- 1/sqrt((anova_richness$total_corrected))
+shapiro.test(new_total_corrected)
+
+
+# Perform one-way ANOVA
+result_anova <- aov(new_total_corrected ~ Stream, data = result)
+
+# Display the ANOVA table
+summary(result_anova)
+
+
 
 
 # Abundance ---------------------------------------------------------------
+
 
 # Assuming your_data is your dataset
 result_abudance <- data %>%
