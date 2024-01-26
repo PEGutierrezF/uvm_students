@@ -38,10 +38,10 @@ ggplot(data_remaining, aes(x = Group, y = Mean_remaining, fill = Stream)) +
 ###########################################################################
 
 data_anova <- data %>%
-  group_by(Stream, Pack, Replicate) %>%
+  group_by(landuses, Stream, Pack) %>%
   slice(1) %>%
   ungroup() %>%
-  select(Stream, Weight_final)
+  select(landuses, Stream, Weight_final)
 
 # Print the new table
 print(data_anova)
@@ -52,13 +52,13 @@ shapiro.test(new_Weight_final)
 
 
 # Perform one-way ANOVA
-result_anova <- aov(new_Weight_final ~ Stream, data = new_table)
+res.aov2 <- aov(new_Weight_final ~ landuses * Stream, data = data_anova)
 
 # Display the ANOVA table
-summary(result_anova)
+summary(res.aov2)
 
 # Perform Tukey post-hoc test
-tukey_result <- TukeyHSD(result_anova)
+tukey_result <- TukeyHSD(res.aov2)
 
 # Display the Tukey post-hoc test results
 print(tukey_result)
