@@ -13,18 +13,21 @@ head(data,6)
 
 result <- data %>%
   group_by(Stream, Pack) %>%
-  reframe(
-    Mean = n_distinct(Family),
-    Subtraction_Result = first(Weight_final),
-    Mean_Divided = Mean / Weight_final)
+  summarize(SumDistinctFamily = sum(n_distinct(Family)),
+            FirstWeightFinal = first(Weight_final),
+            total_corrected = SumDistinctFamily / FirstWeightFinal) %>%
+  ungroup()
+
+
 result
+
 
 
 # Summarize by stream
 summary_richness <- result %>%
   group_by(Stream) %>%
-  summarise(Mean_Fam_richness = mean(Mean_Divided),
-            SD_Fam_richness = sd(Mean_Divided))
+  summarise(Mean_Fam_richness = mean(total_corrected),
+            SD_Fam_richness = sd(total_corrected))
 
 
 # Create a new column for grouping
@@ -48,6 +51,16 @@ p_c
 
 
 
+anova_richness <- result %>%
+  group_by(Stream, Pack) %>%
+  slice(1) %>%
+  ungroup() %>%
+  select(Stream, total_corrected)
+
+shapiro.test(anova_richness$total_corrected)
+
+
+# Abundance ---------------------------------------------------------------
 
 # Assuming your_data is your dataset
 result_abudance <- data %>%
