@@ -30,7 +30,7 @@ ggplot(summary_data, aes(x = stream, y = Mean)) +
   geom_point(aes(color = variable), position = position_dodge(width = 0.5), size = 5) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD, color = variable), position = position_dodge(width = 0.5), width = 0.2) +
   facet_wrap(~ variable, scales = "free_y", strip.position = "top", drop = TRUE) +
-  labs(title = "Mean and SD per Stream and Variable",
+  labs(title = "",
        x = "Stream",
        y = "Mean") +
   theme_bw() +
