@@ -5,7 +5,9 @@ library(readxl)
 library(dplyr)
 library(ggplot2)
 library(patchwork)
-
+library(vegan)
+install.packages("ade4")
+library(ade4)
 
 data <- read_excel('Sum_Stream_Data.xlsx', sheet = 'Phys')
 head(data,6)
@@ -35,3 +37,25 @@ ggplot(summary_data, aes(x = stream, y = Mean)) +
        y = "Mean") +
   theme_bw() +
   theme(legend.position = "none")
+
+
+
+# Subset the dataset for Temperature variable
+data_temperature <- subset(data, variable == "Temperature")
+
+# Two-way PERMANOVA
+result_temperature <- adonis2(data_temperature$value ~ landuse + stream, data_temperature)
+print(result_temperature)
+
+
+
+install.packages('devtools')
+library(devtools)
+install_github("pmartinezarbizu/pairwiseAdonis/pairwiseAdonis") 
+library(pairwiseAdonis)
+
+pair.mod <- pairwise.adonis(data_temperature, factors=data_temperature$stream)
+pair.mod
+
+
+
