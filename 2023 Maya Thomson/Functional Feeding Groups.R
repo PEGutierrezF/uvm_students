@@ -7,7 +7,7 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
-data <- read_excel('2023 Maya Thomson/Sum_Stream_Data.xlsx', sheet = 'FFG')
+data <- read_excel('Sum_Stream_Data.xlsx', sheet = 'FFG')
 head(data,6)
 
 # Filtrar el dataframe para Pair1 (Brown y Stevenville)
@@ -48,3 +48,33 @@ u
 f + u
 
 
+
+data <- read_excel('Sum_Stream_Data.xlsx', sheet = 'Macros')
+head(data,6)
+
+
+# Calculate the total count of each Functional_Group within each combination of Stream and Pack
+data_summary <- data %>%
+  group_by(Stream, Pack, Functional_Group) %>%
+  summarise(count = n()) %>%
+  ungroup()
+
+# Calculate the total count of Functional_Group within each combination of Stream and Pack
+data_summary <- data_summary %>%
+  group_by(Stream, Pack) %>%
+  mutate(total_count = sum(count)) %>%
+  ungroup()
+
+# Calculate the relative abundance of each Functional_Group within each combination of Stream and Pack
+data_summary <- data_summary %>%
+  mutate(relative_abundance = (count / total_count) * 100)
+
+# Select only necessary columns
+result <- data_summary %>% 
+  select(Stream, Pack, Functional_Group, relative_abundance)
+
+# Print the result
+print(result)
+
+
+result
