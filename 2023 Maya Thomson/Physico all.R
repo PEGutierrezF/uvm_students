@@ -6,8 +6,8 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 library(vegan)
-install.packages("ade4")
 library(ade4)
+require(pairwiseAdonis)
 
 data <- read_excel('Sum_Stream_Data.xlsx', sheet = 'Phys')
 head(data,6)
@@ -40,6 +40,8 @@ ggplot(summary_data, aes(x = stream, y = Mean)) +
 
 
 
+
+# Temperature -------------------------------------------------------------
 # Subset the dataset for Temperature variable
 data_temperature <- subset(data, variable == "Temperature")
 
@@ -48,14 +50,50 @@ result_temperature <- adonis2(data_temperature$value ~ landuse + stream, data_te
 print(result_temperature)
 
 
-
-install.packages('devtools')
-library(devtools)
-install_github("pmartinezarbizu/pairwiseAdonis/pairwiseAdonis") 
-library(pairwiseAdonis)
-
-pair.mod <- pairwise.adonis(data_temperature, factors=data_temperature$stream)
-pair.mod
+dist.temp <- vegdist(data_temperature$value, method="euclidean")
+pairwise.adonis2(dist.temp ~ landuse, 
+                 data = data_temperature, permutations = 999)
 
 
+dist.temp.stream <- vegdist(data_temperature$value, method="euclidean")
+pairwise.adonis2(dist.temp.stream ~ stream, 
+                 data = data_temperature, permutations = 999)
 
+
+
+# pH ----------------------------------------------------------------------
+# Subset the dataset for pH variable
+data_pH <- subset(data, variable == "pH")
+
+# Two-way PERMANOVA
+result_pH <- adonis2(data_pH$value ~ landuse + stream, data_pH)
+print(result_pH)
+
+
+dist.pH <- vegdist(data_pH$value, method="euclidean")
+pairwise.adonis2(dist.pH ~ landuse, 
+                 data = data_pH, permutations = 999)
+
+
+dist.pH.stream <- vegdist(data_pH$value, method="euclidean")
+pairwise.adonis2(dist.pH.stream ~ stream, 
+                 data = data_pH, permutations = 999)
+
+
+
+# conductivity----------------------------------------------------------------------
+# Subset the dataset for pH variable
+data_cond<- subset(data, variable == "Conductivity")
+
+# Two-way PERMANOVA
+result_cond <- adonis2(data_cond$value ~ landuse + stream, data_cond)
+print(result_cond)
+
+
+dist.cond <- vegdist(data_cond$value, method="euclidean")
+pairwise.adonis2(dist.cond.stream ~ landuse, 
+                 data = data_cond, permutations = 999)
+
+dist.cond.stream <- vegdist(data_cond$value, method="euclidean")
+pairwise.adonis2(dist.cond.stream ~ stream, 
+                 data = data_cond, permutations = 999)
