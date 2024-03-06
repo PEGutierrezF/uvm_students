@@ -19,7 +19,7 @@ data_remaining <- data %>%
 
 # Create a new column for grouping
 data_remaining$Group <- ifelse(data_remaining$Stream %in% 
-                                   c("Brown", "Stevenspeil"), "Forested", "Urban")                         
+                                   c("Brown", "Stevensville"), "Forested", "Urban")                         
                                    
                                    
 ggplot(data_remaining, aes(x = Group, y = Mean_remaining, fill = Stream)) +

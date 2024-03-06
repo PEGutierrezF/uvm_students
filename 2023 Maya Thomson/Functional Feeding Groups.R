@@ -11,7 +11,7 @@ data <- read_excel('Sum_Stream_Data.xlsx', sheet = 'FFG')
 head(data,6)
 
 # Filtrar el dataframe para Pair1 (Brown y Stevenville)
-Forested <- data[data$stream %in% c("Brown", "Stevenville"), ]
+Forested <- data[data$stream %in% c("Brown", "Stevensville"), ]
 
 
 # Create a 100% stacked bar chart
@@ -91,10 +91,61 @@ shredder_data <- data_summary %>%
 shapiro.test(shredder_data$relative_abundance)
 
 # Conduct ANOVA with 'relative_abundance' as the response and 'Stream' as the predictor
-aov_shredder <- aov(relative_abundance ~ Stream * landuse, data = shredder_data)
+aov_shredder <- aov(relative_abundance ~ landuse + Stream, data = shredder_data)
 
 # Print ANOVA results
 summary(aov_shredder)
+
+
+
+# Filter for 'Collector' Functional_Group
+collector_data <- data_summary %>%
+  filter(Functional_Group == "Collector")
+
+shapiro.test(collector_data$relative_abundance)
+
+# Conduct ANOVA with 'relative_abundance' as the response and 'Stream' as the predictor
+aov_collector <- aov(relative_abundance ~landuse+Stream, data = collector_data)
+
+# Print ANOVA results
+summary(aov_collector)
+
+# Perform Tukey post-hoc test
+TukeyHSD(aov_collector)
+
+
+
+
+# Filter for 'Scraper' Functional_Group
+Scraper_data <- data_summary %>%
+  filter(Functional_Group == "Scraper")
+
+shapiro.test(Scraper_data$relative_abundance)
+a <- log(Scraper_data$relative_abundance)
+shapiro.test(a)
+
+# Conduct ANOVA with 'relative_abundance' as the response and 'Stream' as the predictor
+aov_scraper <- aov(a ~ landuse+Stream, data = Scraper_data)
+
+# Print ANOVA results
+summary(aov_scraper)
+
+
+
+# Filter for 'Predator' Functional_Group
+Predator_data <- data_summary %>%
+  filter(Functional_Group == "Predator")
+
+shapiro.test(Predator_data$relative_abundance)
+
+# Conduct ANOVA with 'relative_abundance' as the response and 'Stream' as the predictor
+aov_scraper <- aov(relative_abundance ~ landuse+Stream, data = Predator_data)
+
+# Print ANOVA results
+summary(aov_scraper)
+
+
+
 
 # Plot --------------------------------------------------------------------
 # Calculate the mean and standard deviation of the relative abundance for each Functional_Group within each Stream
