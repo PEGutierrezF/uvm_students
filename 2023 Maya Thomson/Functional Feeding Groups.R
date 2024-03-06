@@ -50,8 +50,6 @@ f + u
 
 
 # Relative abundance ------------------------------------------------------
-
-
 data <- read_excel('Sum_Stream_Data.xlsx', sheet = 'Macros')
 head(data,6)
 
@@ -81,7 +79,24 @@ print(result)
 
 
 
+# ANOVAs ------------------------------------------------------------------
+# Add a column to categorize streams as "Forested" or "Urban" based on their names
+data_summary <- data_summary %>%
+  mutate(landuse = ifelse(Stream %in% c("Brown", "Stevensville"), "Forested", "Urban"))
 
+# Filter for 'Shredder' Functional_Group
+shredder_data <- data_summary %>%
+  filter(Functional_Group == "Shredder")
+
+shapiro.test(shredder_data$relative_abundance)
+
+# Conduct ANOVA with 'relative_abundance' as the response and 'Stream' as the predictor
+aov_shredder <- aov(relative_abundance ~ Stream * landuse, data = shredder_data)
+
+# Print ANOVA results
+summary(aov_shredder)
+
+# Plot --------------------------------------------------------------------
 # Calculate the mean and standard deviation of the relative abundance for each Functional_Group within each Stream
 mean_sd_relative <- data_summary %>%
   group_by(Stream, Functional_Group) %>%
