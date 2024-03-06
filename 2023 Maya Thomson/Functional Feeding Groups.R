@@ -49,6 +49,9 @@ f + u
 
 
 
+# Relative abundance ------------------------------------------------------
+
+
 data <- read_excel('Sum_Stream_Data.xlsx', sheet = 'Macros')
 head(data,6)
 
@@ -77,4 +80,31 @@ result <- data_summary %>%
 print(result)
 
 
-result
+
+
+# Calculate the mean and standard deviation of the relative abundance for each Functional_Group within each Stream
+mean_sd_relative <- data_summary %>%
+  group_by(Stream, Functional_Group) %>%
+  summarise(mean_relative_abundance = mean(relative_abundance),
+            sd_relative_abundance = sd(relative_abundance))
+
+# Print the result
+print(mean_sd_relative)
+
+
+
+# Reorder the Functional_Group variable as a factor with desired levels
+mean_sd_relative$Functional_Group <- factor(mean_sd_relative$Functional_Group, levels = c("Shredder", "Collector", "Scraper", "Predator"))
+
+# Plotting
+ggplot(mean_sd_relative, aes(x = Functional_Group, y = mean_relative_abundance, fill = Stream)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_errorbar(aes(ymin = mean_relative_abundance - sd_relative_abundance, 
+                    ymax = mean_relative_abundance + sd_relative_abundance),
+                position = position_dodge(width = 0.9), width = 0.25) +
+  labs(x = "Functional Group", y = "Mean Relative Abundance") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "right")
+
