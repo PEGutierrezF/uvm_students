@@ -39,7 +39,7 @@ p_c <- ggplot(summary_richness, aes(x = Group, y = Mean_Fam_richness, fill = Str
                 position = position_dodge(0.9), width = 0.2) +
   labs(title = "",
        x = "Stream",
-       y = "Mean Richness") +
+       y = "Mean Richness (taxa/g)") +
   theme_classic() +
   theme(legend.position = "none")
   
@@ -103,7 +103,7 @@ q_c <- ggplot(summary_abundance, aes(x = Group, y = mean_abundance, fill = Strea
                 position = position_dodge(0.9), width = 0.2) +
   labs(title = "",
        x = "Stream",
-       y = "Mean Abundance") +
+       y = "Mean Abundance (ind/g)") +
   theme_classic()+
   theme(legend.position = "none")
 
