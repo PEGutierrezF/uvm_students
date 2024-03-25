@@ -160,7 +160,7 @@ print(mean_sd_relative)
 
 
 # Reorder the Functional_Group variable as a factor with desired levels
-mean_sd_relative$Functional_Group <- factor(mean_sd_relative$Functional_Group, levels = c("Shredder", "Collector", "Scraper", "Predator"))
+mean_sd_relative$Functional_Group <- factor(mean_sd_relative$Functional_Group, levels = c("Shredder", "Collector","Filterers" ,"Scraper", "Predator"))
 
 # Plotting
 ggplot(mean_sd_relative, aes(x = Functional_Group, y = mean_relative_abundance, fill = Stream)) +
