@@ -144,7 +144,13 @@ TukeyHSD(result_anova)
 
 
 
+
+
+
+###########################################################################
 # Biomass -----------------------------------------------------------------
+###########################################################################
+
 # Sum biomass column by Stream and Pack
 result_biomass <- data %>%
   group_by(Stream, Pack) %>%
@@ -197,7 +203,7 @@ shapiro.test(new_biomass_corrected)
 
 
 # Perform one-way ANOVA
-result_biomass_anova <- aov(new_biomass_corrected ~ Stream + landuse, data = anova_biomass)
+result_biomass_anova <- aov(new_biomass_corrected ~ landuse+Stream , data = anova_biomass)
 
 # Display the ANOVA table
 summary(result_biomass_anova)
