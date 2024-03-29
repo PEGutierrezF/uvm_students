@@ -57,8 +57,7 @@ pairwise.adonis2(dist.temp ~ landuse,
 
 dist.temp.stream <- vegdist(data_temperature$value, method="euclidean")
 pairwise.adonis2(dist.temp.stream ~ stream, 
-                 data = data_temperature, permutations = 999)
-
+                 data = data_temperature, permutations=99)
 
 
 # pH ----------------------------------------------------------------------
@@ -83,7 +82,7 @@ pairwise.adonis2(dist.pH.stream ~ stream,
 
 # conductivity----------------------------------------------------------------------
 # Subset the dataset for pH variable
-data_cond<- subset(data, variable == "Conductivity")
+data_cond <- subset(data, variable == "Conductivity")
 
 # Two-way PERMANOVA
 result_cond <- adonis2(data_cond$value ~ landuse + stream, data_cond)
@@ -91,9 +90,10 @@ print(result_cond)
 
 
 dist.cond <- vegdist(data_cond$value, method="euclidean")
-pairwise.adonis2(dist.cond.stream ~ landuse, 
+pairwise.adonis2(dist.cond ~ landuse, 
                  data = data_cond, permutations = 999)
 
 dist.cond.stream <- vegdist(data_cond$value, method="euclidean")
-pairwise.adonis2(dist.cond.stream ~ stream, 
-                 data = data_cond, permutations = 999)
+pairwiseAdonis::pairwise.adonis2(dist.cond ~ stream, 
+                 data = data_cond, permutations = 9999)
+
