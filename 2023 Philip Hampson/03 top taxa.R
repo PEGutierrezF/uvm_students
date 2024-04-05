@@ -74,3 +74,10 @@ lm_model <- lm(total_density ~ as.Date(Date), data = chironomidae_data)
 
 # Summary of the linear model
 summary(lm_model)
+
+shapiro.test(lm_model$residuals)
+par(mfrow=c(2,2))
+plot(lm_model)
+par(mfrow=c(1,1))
+
+hist(lm_model$residuals)

@@ -54,11 +54,11 @@ plot
 
 # lineal model ------------------------------------------------------------
 shapiro.test(abundance$mean)
-abundance$mean_new <- sqrt(abundance$mean)
+abundance$mean_new <- log10(abundance$mean)
 shapiro.test(abundance$mean_new)
 
 mod3 <-  lm(mean_new ~ Date, data = abundance)
-summary(mod)
+summary(mod3)
 
 
 # Best transformation -----------------------------------------------------
