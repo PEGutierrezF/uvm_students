@@ -27,16 +27,20 @@ ranchbrook$taxa_newname <- paste(ranchbrook$Order, ranchbrook$Family,
                             ranchbrook$SpeciesGroup, ranchbrook$Species, 
                             sep = '_')
 
+# Unique number of taxa across the entire period
+n_distinct(unique_taxa <- unique(ranchbrook$taxa_newname))
 
+# Summarize per year
 richness.ranchbrook <- ranchbrook %>%
   select(Date, taxa_newname)
-
 
 richness <- richness.ranchbrook %>%
   group_by(Date) %>%
   summarise(taxa_richness = n_distinct(taxa_newname))
 
 
+
+# Plot --------------------------------------------------------------------
 richness$Date <- as.Date(richness$Date)
 
 plot <- ggplot(richness, aes(x = Date, y = taxa_richness)) +
@@ -57,7 +61,6 @@ plot
 
 
 # lineal model ------------------------------------------------------------
-
 shapiro.test(richness$taxa_richness)
 mod <-  lm(taxa_richness ~ Date, data = richness)
 summary(mod)
