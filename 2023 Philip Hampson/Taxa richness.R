@@ -43,7 +43,7 @@ richness <- richness.ranchbrook %>%
 # Plot --------------------------------------------------------------------
 richness$Date <- as.Date(richness$Date)
 
-plot <- ggplot(richness, aes(x = Date, y = taxa_richness)) +
+plot_richness <- ggplot(richness, aes(x = Date, y = taxa_richness)) +
   geom_point() +
   geom_smooth(method = "lm", formula = y ~ x, se = T) +
   labs(x = "Sampling Date", y = "Taxa richness") +
@@ -56,7 +56,7 @@ plot <- ggplot(richness, aes(x = Date, y = taxa_richness)) +
     axis.title.y = element_text(size = 16),
     axis.text.y = element_text(size = 14)
   )
-plot
+plot_richness
 
 
 
