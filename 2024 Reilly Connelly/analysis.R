@@ -1,3 +1,17 @@
+
+
+
+
+# --------------------------------------------------------
+# Honor Thesis Reilly Connelly
+# Date: Sat Oct 26 2024 15:49:27
+# Pablo E. Gutierrez-Fonseca
+# pabloe.gutierrezfonseca@gmail.com
+# --------------------------------------------------------
+
+
+
+
 library(readxl)
 library(dplyr)
 library(ggplot2)
