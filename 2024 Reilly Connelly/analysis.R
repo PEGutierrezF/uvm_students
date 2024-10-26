@@ -23,7 +23,7 @@ ggplot(data, aes(x = num_spec, y = num_link,
 # Create the plot with linear models for both regions on the same plot
 b <- ggplot(data, aes(x = connect, y = num_spec, color = region)) +
   geom_point(size = 3) +  # Points colored by region
-  geom_smooth(method = "lm", se = FALSE) +  # Add separate linear models for each region
+  geom_smooth(method = "lm", se = T) +  # Add separate linear models for each region
   labs(
     x = "Connectance",
     y = "Number of Species",
