@@ -80,12 +80,12 @@ predicted_data <- data %>%
   })
 
 # Plot the data and fitted curves
-b <- ggplot(data, aes(x = connect, y = num_spec, color = region)) +
+b <- ggplot(data, aes(x = num_spec, y = connect, color = region)) +
   geom_point(size = 3) +  # Data points
-  geom_line(data = predicted_data, aes(x = connect, y = num_spec, color = region), size = 1) +  # Fitted inverse lines
+  geom_line(data = predicted_data, aes(x = num_spec, y = connect, color = region), size = 1) +  # Fitted inverse lines
   labs(
-    x = "Connectance",
-    y = "Number of Species",
+    x = "Number of Species",
+    y = "Connectance",
     color = "Region",
     title = ""
   ) +
