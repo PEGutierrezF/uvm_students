@@ -48,7 +48,7 @@ ggplot(data, aes(x = num_spec, y = num_link,
 a <- ggplot(data, aes(x = num_spec, y = num_link, 
                       color = region)) +
   geom_point(size = 3) +  # Points colored by region
-  geom_smooth(method = "lm", se = F) +  # Add separate linear models for each region
+  geom_smooth(method = "lm", se = T) +  # Add separate linear models for each region
   labs(
     x = "Number of Species",
     y = "num_link",
@@ -70,13 +70,10 @@ a
 predicted_data <- data %>%
   group_by(region) %>%
   do({
-    model <- nls(num_spec ~ a / connect + b, data = ., start = list(a = 1, b = 1))
-    connect_seq <- seq(min(.$connect), max(.$connect), length.out = 100)
-    data.frame(
-      connect = connect_seq,
-      num_spec = predict(model, newdata = data.frame(connect = connect_seq)),
-      region = unique(.$region)
-    )
+    model <- nls(connect ~ a / num_spec + b, data = ., start = list(a = 1, b = 0))
+    data.frame(num_spec = seq(min(.$num_spec), max(.$num_spec), length.out = 100),
+               connect = predict(model, newdata = data.frame(num_spec = seq(min(.$num_spec), max(.$num_spec), length.out = 100))),
+               region = unique(.$region))
   })
 
 # Plot the data and fitted curves
