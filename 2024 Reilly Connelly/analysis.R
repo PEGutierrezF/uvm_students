@@ -17,7 +17,7 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
-data<- read_xlsx('data.xlsx')
+data <- read_xlsx('data.xlsx', sheet='update')
 head(data,20)
 
 mod1 <- lm(num_link~num_spec, data=data)
@@ -93,3 +93,5 @@ b <- ggplot(data, aes(x = num_spec, y = connect, color = region)) +
 
 b
 a + b
+
+
