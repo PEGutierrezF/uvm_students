@@ -17,7 +17,7 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
-data <- read_xlsx('data.xlsx', sheet='update')
+data <- read_xlsx('data.xlsx', sheet='final_data')
 head(data,20)
 
 mod1 <- lm(num_link~num_spec, data=data)
