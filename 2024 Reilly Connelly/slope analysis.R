@@ -15,7 +15,7 @@ data <- read_xlsx('data.xlsx', sheet='final_data')
 head(data,6)
 
 # Exclude the last row
-data <- data[-nrow(data), ]
+data <- data[-nrow(data), ]# (Yule et al. 2010)
 
 data <- data %>%
   mutate(log_num_spec = log(num_spec),

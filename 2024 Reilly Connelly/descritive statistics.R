@@ -11,6 +11,8 @@
 
 # Read data from Excel
 data <- read_xlsx('data.xlsx', sheet = 'final_data')
+# Exclude the last row
+data <- data[-nrow(data), ]# (Yule et al. 2010)
 
 # Split data for Temperate region
 temperate_data <- data %>%
