@@ -15,18 +15,32 @@
 library(readxl); library(dplyr); library(ggplot2)
 library(patchwork)
 
-data <- read_xlsx('data.xlsx', sheet='final_data')
+data <- read_xlsx('2024 Reilly Connelly/data.xlsx', sheet='final_data')
 
 # Exclude the last row
 data <- data[-nrow(data), ]# (Yule et al. 2010)
 
 head(data,20)
 
-mod1 <- lm(num_link~num_spec, data=data)
-summary(mod1)
-shapiro.test(residuals(mod1))
+
+# Number of links vs Species Richness  ------------------------------------
+data <- data %>%
+  mutate(log_num_spec = log(num_spec),
+         log_num_link = log(num_link))
+
+ancova_mod_links_log <- lm(log_num_link ~ log_num_spec * region, data = data)
+summary(ancova_mod_links_log)
+shapiro.test(residuals(ancova_mod_links_log))  # Check normality again
 
 
+# Summary of the Slopes:
+# Temperate Region:
+  Slope = log_num_spec coefficient = 1.7022
+# Tropical Region:
+  Slope = 1.7022 + (-0.5367) = 1.1655
+
+
+# Connectance -------------------------------------------------------------
 mod2 <- lm(num_spec~connect, data=data)
 summary(mod2)
 shapiro.test(residuals(mod2))

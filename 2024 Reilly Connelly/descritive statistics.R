@@ -10,7 +10,7 @@
 # --------------------------------------------------------
 
 # Read data from Excel
-data <- read_xlsx('data.xlsx', sheet = 'final_data')
+data <- read_xlsx('2024 Reilly Connelly/data.xlsx', sheet = 'final_data')
 # Exclude the last row
 data <- data[-nrow(data), ]# (Yule et al. 2010)
 
@@ -22,12 +22,12 @@ temperate_data <- data %>%
 lowest_connectance <- data %>%
   group_by(region) %>%
   arrange(connect) %>%
-  slice_head(n = 5)  # Get 5 lowest values
+  slice_head(n = 1)  # Get 1 lowest values
 
 highest_connectance <- data %>%
   group_by(region) %>%
   arrange(desc(connect)) %>%
-  slice_head(n = 5)  # Get 5 highest values
+  slice_head(n = 1)  # Get 1 highest values
 
 # Print results
 print("Top 5 Lowest Connectance by Region:")
@@ -35,3 +35,33 @@ print(lowest_connectance)
 
 print("Top 5 Highest Connectance by Region:")
 print(highest_connectance)
+
+
+# Species richness ----------------------------------------------------------
+# Get top 5 lowest and highest Species richness values by region
+lowest_num_spec <- data %>%
+  group_by(region) %>%
+  arrange(num_spec) %>%
+  slice_head(n = 1)  # Get 1 lowest values
+lowest_num_spec
+
+highest_num_spec <- data %>%
+  group_by(region) %>%
+  arrange(desc(num_spec)) %>%
+  slice_head(n = 1)  # Get 1 highest values
+highest_num_spec
+
+
+# Number of links ----------------------------------------------------------
+# Get top 5 lowest and highest Number of links values by region
+lowest_num_link <- data %>%
+  group_by(region) %>%
+  arrange(num_link ) %>%
+  slice_head(n = 1)  # Get 1 lowest values
+lowest_num_link 
+
+highest_num_link <- data %>%
+  group_by(region) %>%
+  arrange(desc(num_link )) %>%
+  slice_head(n = 1)  # Get 1 highest values
+highest_num_link
