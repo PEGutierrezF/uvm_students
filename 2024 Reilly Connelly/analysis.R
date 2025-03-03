@@ -30,6 +30,15 @@ data <- data %>%
 
 ancova_mod_links_log <- lm(log_num_link ~ log_num_spec * region, data = data)
 summary(ancova_mod_links_log)
+
+# The significant interaction term (p = 0.000566) shows that species richness 
+# affects the number of links differently across regions. Temperate streams have 
+# a steeper increase in links (slope = 1.7022), while tropical streams have a 
+# slower increase (slope = 1.1655) but start with more links. This suggests 
+# temperate streams form interactions more flexibly, whereas tropical streams 
+# may have more constrained or specialized networks.
+
+
 shapiro.test(residuals(ancova_mod_links_log))  # Check normality again
 
 
@@ -40,13 +49,7 @@ shapiro.test(residuals(ancova_mod_links_log))  # Check normality again
   Slope = 1.7022 + (-0.5367) = 1.1655
 
 
-# Connectance -------------------------------------------------------------
-mod2 <- lm(num_spec~connect, data=data)
-summary(mod2)
-shapiro.test(residuals(mod2))
-
-
-# Create the plot# Create tdatahe plot
+# Create the plot
 ggplot(data, aes(x = num_spec, y = num_link, 
                  color = region)) +
   geom_point(size = 3) +  
@@ -106,9 +109,8 @@ b <- ggplot(data, aes(x = num_spec, y = connect, color = region)) +
   theme(legend.position = "top") 
 #  geom_text(aes(label=ifelse(connect>0.15,as.character(paper),'')),hjust=0,vjust=0)
 
-
-
 b
+
 a + b
 
 

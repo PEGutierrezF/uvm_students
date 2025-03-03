@@ -18,7 +18,7 @@ data <- data[-nrow(data), ]# (Yule et al. 2010)
 temperate_data <- data %>%
   filter(region == "Temperate")  # Adjust based on actual region names
 
-# Get top 5 lowest and highest connectance values by region
+# Get top # lowest and highest connectance values by region
 lowest_connectance <- data %>%
   group_by(region) %>%
   arrange(connect) %>%
@@ -38,7 +38,7 @@ print(highest_connectance)
 
 
 # Species richness ----------------------------------------------------------
-# Get top 5 lowest and highest Species richness values by region
+# Get top # lowest and highest Species richness values by region
 lowest_num_spec <- data %>%
   group_by(region) %>%
   arrange(num_spec) %>%
