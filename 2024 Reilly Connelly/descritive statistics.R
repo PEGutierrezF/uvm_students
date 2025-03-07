@@ -9,6 +9,14 @@
 # pabloe.gutierrezfonseca@gmail.com
 # --------------------------------------------------------
 
+
+
+
+library(readxl); library(dplyr); library(ggplot2)
+library(patchwork)
+
+
+
 # Read data from Excel
 data <- read_xlsx('2024 Reilly Connelly/data.xlsx', sheet = 'final_data')
 # Exclude the last row

@@ -9,7 +9,13 @@
 # pabloe.gutierrezfonseca@gmail.com
 # --------------------------------------------------------
 
-library(boot)
+
+
+
+library(readxl); library(dplyr); library(ggplot2)
+library(patchwork)
+
+
 
 data <- read_xlsx('data.xlsx', sheet='final_data')
 head(data,6)

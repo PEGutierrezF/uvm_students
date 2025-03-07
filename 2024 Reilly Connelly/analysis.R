@@ -15,6 +15,9 @@
 library(readxl); library(dplyr); library(ggplot2)
 library(patchwork)
 
+
+
+
 data <- read_xlsx('2024 Reilly Connelly/data.xlsx', sheet='final_data')
 
 # Exclude the last row
@@ -28,6 +31,7 @@ data <- data %>%
   mutate(log_num_spec = log(num_spec),
          log_num_link = log(num_link))
 
+# ANCOVA
 ancova_mod_links_log <- lm(log_num_link ~ log_num_spec * region, data = data)
 summary(ancova_mod_links_log)
 
